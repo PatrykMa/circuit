@@ -3,13 +3,13 @@ class Node {
         var nodeList = mutableListOf<Node>()
         fun updatePotential(){
 
-            var matrix = Array<DoubleArray>(nodeList.size -1,{i-> DoubleArray(nodeList.size-1) })
-            var equal = DoubleArray(nodeList.size-1,{ i-> 0.0})
+            val matrix = Array<DoubleArray>(nodeList.size -1,{i-> DoubleArray(nodeList.size-1) })
+            val equal = DoubleArray(nodeList.size-1,{ i-> 0.0})
 
-            var rowID =0
-            var columnId =0
+            var rowID = 0
+
             nodeList.forEach{ row ->
-                columnId = 0
+                var columnId = 0
                 if (row != groundedNode) {
                     nodeList.forEach{ column ->
                         if (column != groundedNode) {
@@ -33,16 +33,16 @@ class Node {
 
                         // jesli płynie od to -
                             if (it.from == row)
-                                equal[rowID] -= it.tension
+                                equal[rowID] -= (it.tension + it.flow)
                             // jesli płydie do to +
                             else
-                                equal[rowID] += it.tension
+                                equal[rowID] += (it.tension + it.flow)
                     }
                     rowID ++
                 }
             }
 
-            var result = Solver.lsolve(matrix,equal)
+            val result = Solver.lsolve(matrix,equal)
             nodeList.forEachIndexed{i,it ->
                 if (groundedNode != it)
                 it.potecial = result[i]
