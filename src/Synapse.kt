@@ -31,7 +31,7 @@ class Synapse
         set(value) {}
     var flow:Double
         get() {if(flowSource == null)
-        return  0.0
+        return 0.0
         return  flowSource!!.flowValue}
         set(value) {}
 }
